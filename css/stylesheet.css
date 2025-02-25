@@ -1,0 +1,140 @@
+html {
+    font-family:Arial, Helvetica, sans-serif
+}
+
+header {
+    margin-bottom: 1em;
+}
+
+#logo {
+    height: 2em;
+    width: auto;
+    margin-bottom: 0.5em;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#hidden-container {
+    visibility: hidden;
+    position: relative;
+}
+
+#json-input {
+    display: none;
+}
+
+button.only-edit, input.only-edit::placeholder {
+    visibility: hidden;
+}
+button.only-edit.is-on, input.only-edit.is-on::placeholder {
+    visibility: visible;
+}
+input.only-edit {
+    pointer-events: none;
+    border: none;
+}
+input.only-edit.is-on {
+    pointer-events: all;
+    background-color: #ffffea;
+}
+
+.title, .key-container {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.title {
+    font-size: 1.5em;
+}
+
+.chord, .lyric, .key, .key-label, .capo, .capo-label {
+    font-size: 1.2em;
+}
+input.key, input.capo {
+    font-size: 1em;
+}
+
+.chord {
+    color: #ff0000;
+}
+
+.capo-label {
+    margin-left: 1.5em;
+}
+
+.hidden-span {
+    position: absolute;
+}
+
+.block-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.block {
+    display: flex;
+}
+
+.row-inner {
+    display: flex;
+}
+
+.add-row, .add-block, .delete-row, .delete-block {
+    padding: 0;
+    border: 0;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1px;
+}
+
+.add-row, .delete-block {
+    height: 1em;
+}
+.add-block, .delete-row {
+    width: 1em;
+}
+
+.add-block, .add-row {
+    border: 1px solid #7fbfff;
+    color: #7fbfff;
+}
+.add-block:hover, .add-row:hover {
+    background-color: #f4f9ff;
+}
+.add-block:active, .add-row:active {
+    background-color: #e0efff;
+}
+
+.delete-block, .delete-row {
+    border: 1px solid #ff7f7f;
+    color: #ff7f7f;
+}
+.delete-block:hover, .delete-row:hover {
+    background-color: #fff4f4;
+}
+.delete-block:active, .delete-row:active {
+    background-color: #ffe0e0;
+}
+
+.add-row {
+    width: 100%;
+}
+
+.header-button {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 0.5em;
+    color: #000000;
+}
+.header-button:hover, .header-button.is-on {
+    background-color: #efefef;
+}
+.header-button:active, .header-button.is-on:active {
+    background-color: #dfdfdf;
+}
