@@ -254,7 +254,8 @@ const reload_container = () => {
         })
 
         if(rows.indexOf(row) > 0) {
-            let row_inner_div = get_new_element('div', 'row-inner')
+            let row_inner_1_div = get_new_element('div', 'row-inner-1')
+            let row_inner_2_div = get_new_element('div', 'row-inner-2')
 
             let delete_row_button = get_new_element('button', 'delete-row only-edit')
             delete_row_button.innerHTML = '-'
@@ -320,11 +321,12 @@ const reload_container = () => {
                 }
                 
                 block_div.appendChild(add_block_button)
-                row_inner_div.appendChild(block_div)
+                row_inner_2_div.appendChild(block_div)
             }
             
-            row_inner_div.appendChild(delete_row_button)
-            row_div.appendChild(row_inner_div)
+            row_inner_1_div.appendChild(row_inner_2_div)
+            row_inner_1_div.appendChild(delete_row_button)
+            row_div.appendChild(row_inner_1_div)
         }
         
         row_div.appendChild(add_row_button)

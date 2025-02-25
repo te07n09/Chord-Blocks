@@ -1,20 +1,24 @@
 html {
-    font-family:Arial, Helvetica, sans-serif
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: #f3f3f3;
 }
 
 header {
-    margin-bottom: 1em;
+    margin: 1em;
 }
 
 #logo {
-    height: 2em;
+    height: 1.5em;
     width: auto;
-    margin-bottom: 0.5em;
+    margin: 1em;
 }
 
 #main-container {
     display: flex;
     flex-direction: column;
+    background-color: #ffffff;
+    padding: 1em;
+    border-radius: 2em;
 }
 
 #hidden-container {
@@ -78,8 +82,15 @@ input.key, input.capo {
     display: flex;
 }
 
-.row-inner {
+.row-inner-1 {
+    width: 100%;
     display: flex;
+}
+
+.row-inner-2 {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .add-row, .add-block, .delete-row, .delete-block {
