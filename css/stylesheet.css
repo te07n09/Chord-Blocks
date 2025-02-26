@@ -44,6 +44,12 @@ input.only-edit.is-on {
     pointer-events: all;
     background-color: #ffffea;
 }
+label.only-edit {
+    pointer-events: none;
+}
+label.only-edit.is-on {
+    pointer-events: all;
+}
 
 .title, .key-container {
     margin-top: 0.5em;
@@ -139,7 +145,7 @@ input.key, input.capo {
 
 .header-button {
     background-color: #ffffff;
-    border: 1px solid #000000;
+    border: none;
     border-radius: 0.5em;
     color: #000000;
 }

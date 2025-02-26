@@ -232,9 +232,9 @@ const reload_container = () => {
     })
 
     let key_container_div = get_new_element('div', 'key-container')
-    let key_label = get_new_element('label', 'key-label')
+    let key_label = get_new_element('label', 'key-label only-edit')
     key_label.innerHTML = 'key:'
-    let capo_label = get_new_element('label', 'capo-label')
+    let capo_label = get_new_element('label', 'capo-label only-edit')
     capo_label.innerHTML = 'capo:'
     
     key_label.appendChild(key_input)
