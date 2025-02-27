@@ -51,6 +51,10 @@ label.only-edit.is-on {
     pointer-events: all;
 }
 
+input.only-edit, .hidden-span {
+    padding: 0.2em;
+}
+
 .title, .key-container {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
