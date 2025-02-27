@@ -57,11 +57,11 @@ label.only-edit.is-on {
 }
 
 .title {
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .chord, .lyric, .key, .key-label, .capo, .capo-label {
-    font-size: 1.2em;
+    font-size: 1em;
 }
 input.key, input.capo {
     font-size: 1em;
