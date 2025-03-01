@@ -126,6 +126,7 @@ class Row {
     }
 }
 
+const roots = ['B', 'A#', 'A', 'G#', 'G', 'F#', 'F', 'E', 'D#', 'D', 'C#', 'C']
 let info = new Info()
 let rows = [new Row(), new Row()]
 let edit_is_on = false
@@ -188,6 +189,68 @@ const reload_toggle_edit = () => {
     }
 }
 
+const get_down_chord = (chord) => {
+    let new_chord = chord
+
+    for(let root of roots) {
+        if(chord.includes(root)) {
+            let index = roots.indexOf(root)
+            if(index >= 11) {
+                index = 0
+            }
+            else {
+                index += 1
+            }
+
+            new_chord = chord.replace(root, roots[index])
+
+            break
+        }
+    }
+
+    return new_chord
+}
+
+const get_up_chord = (chord) => {
+    let new_chord = chord
+
+    for(let root of roots) {
+        if(chord.includes(root)) {
+            let index = roots.indexOf(root)
+            if(index <= 0) {
+                index = 11
+            }
+            else {
+                index -= 1
+            }
+
+            new_chord = chord.replace(root, roots[index])
+
+            break
+        }
+    }
+
+    return new_chord
+}
+
+const up_all_chord = () => {
+    for(let row of rows) {
+        for(let block of row.blocks) {
+            block.chord = get_up_chord(block.chord)
+        }
+    }
+    reload_container()
+}
+
+const down_all_chord = () => {
+    for(let row of rows) {
+        for(let block of row.blocks) {
+            block.chord = get_down_chord(block.chord)
+        }
+    }
+    reload_container()
+}
+
 const reload_container = () => {
     main_container.innerHTML = ''
     hidden_container.innerHTML = ''
@@ -231,19 +294,57 @@ const reload_container = () => {
         info.save(title_input, key_input, capo_input)
     })
 
-    let key_container_div = get_new_element('div', 'key-container')
+    let key_container = get_new_element('div', 'key-container')
     let key_label = get_new_element('label', 'key-label only-edit')
     key_label.innerHTML = 'key:'
     let capo_label = get_new_element('label', 'capo-label only-edit')
     capo_label.innerHTML = 'capo:'
+
+    let key_button_container = get_new_element('div', 'key-button-container')
+    let key_up_button = get_new_element('button', 'key-button')
+    key_up_button.innerHTML = '+'
+    let key_down_button = get_new_element('button', 'key-button')
+    key_down_button.innerHTML = '-'
+    let capo_button_container = get_new_element('div', 'capo-button-container')
+    let capo_up_button = get_new_element('button', 'capo-button')
+    capo_up_button.innerHTML = '+'
+    let capo_down_button = get_new_element('button', 'capo-button')
+    capo_down_button.innerHTML = '-'
+
+    key_up_button.addEventListener('click', () => {
+        key_input.value = get_up_chord(key_input.value)
+        info.save(title_input, key_input, capo_input)
+        up_all_chord()
+    })
+    key_down_button.addEventListener('click', () => {
+        key_input.value = get_down_chord(key_input.value)
+        info.save(title_input, key_input, capo_input)
+        down_all_chord()
+    })
+    capo_up_button.addEventListener('click', () => {
+        capo_input.value = `${+capo_input.value + 1}`
+        info.save(title_input, key_input, capo_input)
+        down_all_chord()
+    })
+    capo_down_button.addEventListener('click', () => {
+        capo_input.value = `${+capo_input.value - 1}`
+        info.save(title_input, key_input, capo_input)
+        up_all_chord()
+    })
     
     key_label.appendChild(key_input)
     capo_label.appendChild(capo_input)
-    key_container_div.appendChild(key_label)
-    key_container_div.appendChild(capo_label)
+    key_button_container.appendChild(key_up_button)
+    key_button_container.appendChild(key_down_button)
+    capo_button_container.appendChild(capo_up_button)
+    capo_button_container.appendChild(capo_down_button)
+    key_container.appendChild(key_label)
+    key_container.appendChild(key_button_container)
+    key_container.appendChild(capo_label)
+    key_container.appendChild(capo_button_container)
 
     main_container.appendChild(title_input)
-    main_container.appendChild(key_container_div)
+    main_container.appendChild(key_container)
 
     for(let row of rows) {
         let row_div = get_new_element('div', 'row')

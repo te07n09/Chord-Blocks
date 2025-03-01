@@ -64,6 +64,10 @@ input.only-edit, .hidden-span {
     font-size: 1.2em;
 }
 
+.key-container {
+    display: flex;
+}
+
 .chord, .lyric, .key, .key-label, .capo, .capo-label {
     font-size: 1em;
 }
@@ -147,15 +151,22 @@ input.key, input.capo {
     width: 100%;
 }
 
-.header-button {
+.header-button, .key-button-container, .capo-button-container, .key-button, .capo-button {
     background-color: #ffffff;
     border: none;
-    border-radius: 0.5em;
     color: #000000;
+    border-radius: 0.5em;
 }
-.header-button:hover, .header-button.is-on {
+.key-button-container, .capo-button-container {
+    border: 2px solid #dfdfdf;
+}
+.key-button, .capo-button {
+    height: 100%;
+    width: 3em;
+}
+.header-button:hover, .header-button.is-on, .key-button:hover, .capo-button:hover {
     background-color: #efefef;
 }
-.header-button:active, .header-button.is-on:active {
+.header-button:active, .header-button.is-on:active, .key-button:active, .capo-button:active {
     background-color: #dfdfdf;
 }
