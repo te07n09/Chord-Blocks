@@ -4,6 +4,9 @@ const toggle_edit_button = document.getElementById('toggle-edit')
 const save_json_button = document.getElementById('save-json')
 const load_json_button = document.getElementById('load-json')
 const json_input = document.getElementById('json-input')
+const spead_select_button = document.getElementById('spead-select')
+const spead_option_container = document.getElementById('spead-option-container')
+const spead_options = document.getElementsByClassName('spead-option')
 
 class Info {
     constructor() {
@@ -131,6 +134,10 @@ let info = new Info()
 let rows = [new Row(), new Row()]
 let edit_is_on = false
 let data_is_change = false
+let interval = null
+let scroll_speed = 5
+let scroll_value = 0
+let spead_option_is_open = false
 
 const add_block = (row, index) => {
     row.blocks.splice(index, 0, new Block())
@@ -239,6 +246,7 @@ const up_all_chord = () => {
             block.chord = get_up_chord(block.chord)
         }
     }
+
     reload_container()
 }
 
@@ -248,10 +256,13 @@ const down_all_chord = () => {
             block.chord = get_down_chord(block.chord)
         }
     }
+
     reload_container()
 }
 
 const reload_container = () => {
+    scroll_value = window.scrollY
+
     main_container.innerHTML = ''
     hidden_container.innerHTML = ''
 
@@ -267,34 +278,28 @@ const reload_container = () => {
     key_input.type = 'text'
     key_input.placeholder = 'キー'
     key_input.value = info.key
-    let key_span = get_new_element('span', 'key hidden-span')
-    hidden_container.appendChild(key_span)
-    resize_to_span(key_input, key_span, key_input.placeholder)
 
     let capo_input = get_new_element('input', 'capo only-edit')
     capo_input.type = 'text'
     capo_input.placeholder = 'カポ'
     capo_input.value = info.capo
-    let capo_span = get_new_element('span', 'capo hidden-span')
-    hidden_container.appendChild(capo_span)
-    resize_to_span(capo_input, capo_span, capo_input.placeholder)
-
+    
     title_input.addEventListener('input', () => {
         resize_to_span(title_input, title_span, title_input.placeholder)
         info.save(title_input, key_input, capo_input)
     })
     key_input.addEventListener('input', () => {
         key_input.value = key_input.value.replace(/[^a-zA-Z]/g, '')
-        resize_to_span(key_input, key_span, key_input.placeholder)
         info.save(title_input, key_input, capo_input)
     })
     capo_input.addEventListener('input', () => {
         capo_input.value = capo_input.value.replace(/[^0-9]/g, '')
-        resize_to_span(capo_input, capo_span, capo_input.placeholder)
         info.save(title_input, key_input, capo_input)
     })
 
+    let key_capo_container = get_new_element('div', 'key-capo-container')
     let key_container = get_new_element('div', 'key-container')
+    let capo_container = get_new_element('div', 'capo-container')
     let key_label = get_new_element('label', 'key-label only-edit')
     key_label.innerHTML = 'key:'
     let capo_label = get_new_element('label', 'capo-label only-edit')
@@ -312,21 +317,29 @@ const reload_container = () => {
     capo_down_button.innerHTML = '-'
 
     key_up_button.addEventListener('click', () => {
+        stop_scroll()
+
         key_input.value = get_up_chord(key_input.value)
         info.save(title_input, key_input, capo_input)
         up_all_chord()
     })
     key_down_button.addEventListener('click', () => {
+        stop_scroll()
+
         key_input.value = get_down_chord(key_input.value)
         info.save(title_input, key_input, capo_input)
         down_all_chord()
     })
     capo_up_button.addEventListener('click', () => {
+        stop_scroll()
+
         capo_input.value = `${+capo_input.value + 1}`
         info.save(title_input, key_input, capo_input)
         down_all_chord()
     })
     capo_down_button.addEventListener('click', () => {
+        stop_scroll()
+
         capo_input.value = `${+capo_input.value - 1}`
         info.save(title_input, key_input, capo_input)
         up_all_chord()
@@ -334,17 +347,19 @@ const reload_container = () => {
     
     key_label.appendChild(key_input)
     capo_label.appendChild(capo_input)
-    key_button_container.appendChild(key_up_button)
     key_button_container.appendChild(key_down_button)
-    capo_button_container.appendChild(capo_up_button)
+    key_button_container.appendChild(key_up_button)
     capo_button_container.appendChild(capo_down_button)
+    capo_button_container.appendChild(capo_up_button)
     key_container.appendChild(key_label)
     key_container.appendChild(key_button_container)
-    key_container.appendChild(capo_label)
-    key_container.appendChild(capo_button_container)
+    capo_container.appendChild(capo_label)
+    capo_container.appendChild(capo_button_container)
+    key_capo_container.appendChild(key_container)
+    key_capo_container.appendChild(capo_container)
 
     main_container.appendChild(title_input)
-    main_container.appendChild(key_container)
+    main_container.appendChild(key_capo_container)
 
     for(let row of rows) {
         let row_div = get_new_element('div', 'row')
@@ -434,6 +449,7 @@ const reload_container = () => {
         main_container.appendChild(row_div)
     }
 
+    window.scrollTo(0, scroll_value)
     reload_toggle_edit()
 }
 
@@ -471,6 +487,26 @@ const load_json = (data) => {
     data_is_change = false
 }
 
+const start_scroll = () => {
+    interval = setInterval(() => {
+        window.scrollBy(0, 1)
+    }, 200 / scroll_speed)
+}
+
+const stop_scroll = () => {
+    clearInterval(interval)
+    interval = null
+}
+
+const toggle_option = (is_open, option_container) => {
+    if(is_open) {
+        option_container.style.display = 'flex'
+    }
+    else {
+        option_container.style.display = 'none'
+    }
+}
+
 window.addEventListener('beforeunload', (e) => {
     if(data_is_change) {
         e.preventDefault()
@@ -479,15 +515,21 @@ window.addEventListener('beforeunload', (e) => {
 })
 
 toggle_edit_button.addEventListener('click', () => {
+    stop_scroll()
+
     edit_is_on = !edit_is_on
     reload_toggle_edit()
 })
 
 save_json_button.addEventListener('click', () => {
+    stop_scroll()
+
     save_json()
 })
 
 load_json_button.addEventListener('click', () => {
+    stop_scroll()
+
     if(data_is_change) {
         if(!confirm('保存していない内容は失われます。\nよろしいですか？')) return
     }
@@ -512,5 +554,53 @@ json_input.addEventListener('change', (e) => {
 
     reader.readAsText(file)
 })
+
+main_container.addEventListener('click', (e) => {
+    if(!edit_is_on && !e.target.closest('.key-button-container, .capo-button-container')) {
+        if(interval) {
+            stop_scroll()
+        }
+        else {
+            start_scroll()
+        }
+    }
+})
+
+document.addEventListener('keydown', (e) => {
+    if(e.key == ' ' && !edit_is_on) {
+        e.preventDefault()
+
+        if(interval) {
+            stop_scroll()
+        }
+        else {
+            start_scroll()
+        }
+    }
+})
+
+spead_select_button.addEventListener('click', () => {
+    stop_scroll()
+
+    spead_option_is_open = !spead_option_is_open
+    toggle_option(spead_option_is_open, spead_option_container)
+})
+
+document.addEventListener('click', (e) => {
+    if(!e.target.closest('.select-container')) {
+        spead_option_is_open = false
+        toggle_option(spead_option_is_open, spead_option_container)
+    }
+})
+
+for(let option of spead_options) {
+    option.addEventListener('click', () => {
+        scroll_speed = +option.innerHTML
+        spead_select_button.innerHTML = 'スクロール速度:' + option.innerHTML
+
+        spead_option_is_open = false
+        toggle_option(spead_option_is_open, spead_option_container)
+    })
+}
 
 reload_container()
