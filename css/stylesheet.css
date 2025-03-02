@@ -190,20 +190,16 @@ input.key, input.capo {
 .header-button:active, .header-button.is-on:active, .key-button:active, .capo-button:active {
     background-color: #dfdfdf;
 }
-
 .select-container {
     position: relative;
     font-size: 1em;
 }
-
 .option-container {
     position: absolute;
     display: none;
     flex-direction: column;
     width: 100%;
-    font-size: 1em;
 }
-
 .spead-option {
     text-align: right;
 }
