@@ -6,6 +6,9 @@ html {
 
 header {
     margin: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 #logo {
@@ -56,10 +59,6 @@ input.only-edit, .hidden-span {
     padding: 0.2em;
 }
 
-.annotation-container {
-    margin-bottom: 1em;
-}
-
 .annotation {
     font-size: 0.8em;
     margin-top: 0.2em;
@@ -83,11 +82,11 @@ input.only-edit, .hidden-span {
 .key-capo-container {
     display: flex;
     flex-wrap: wrap;
+    gap: 1em;
 }
 
 .key-container, .capo-container {
     display: flex;
-    margin-right: 1em;
 }
 
 .chord, .lyric, .key, .key-label, .capo, .capo-label {
@@ -175,6 +174,9 @@ input.key, input.capo {
     border: none;
     color: #3f3f3f;
     border-radius: 0.5em;
+}
+.header-button {
+    height: 1.5em;
 }
 .key-button-container, .capo-button-container, .option-container {
     border: 2px solid #dfdfdf;
