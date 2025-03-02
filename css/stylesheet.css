@@ -178,6 +178,7 @@ input.key, input.capo {
 }
 .key-button-container, .capo-button-container, .option-container {
     border: 2px solid #dfdfdf;
+    font-size: 1em;
 }
 .key-button, .capo-button {
     height: 100%;
