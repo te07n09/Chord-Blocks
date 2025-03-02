@@ -194,6 +194,7 @@ input.key, input.capo {
 
 .select-container {
     position: relative;
+    top: 0;
 }
 
 .option-container {
