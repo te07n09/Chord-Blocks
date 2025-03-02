@@ -174,9 +174,7 @@ input.key, input.capo {
     border: none;
     color: #3f3f3f;
     border-radius: 0.5em;
-}
-.header-button {
-    height: 1.5em;
+    font-size: 0.85em;
 }
 .key-button-container, .capo-button-container, .option-container {
     border: 2px solid #dfdfdf;
@@ -194,7 +192,7 @@ input.key, input.capo {
 
 .select-container {
     position: relative;
-    top: 0;
+    font-size: 1em;
 }
 
 .option-container {
@@ -202,6 +200,7 @@ input.key, input.capo {
     display: none;
     flex-direction: column;
     width: 100%;
+    font-size: 1em;
 }
 
 .spead-option {
